@@ -52,11 +52,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_SPECIAL] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC,   KC_NO,   KC_UP,   KC_NO,   KC_NO, KC_PERC,                      KC_CIRC, KC_AMPR, KC_LPRN, KC_RPRN, KC_ASTR,  KC_DEL,
+       KC_ESC, KC_PSCR,   KC_UP,  KC_INS,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_LPRN, KC_RPRN, KC_ASTR,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+S--------|
-      KC_LSFT, KC_LEFT, KC_DOWN, KC_RGHT,   KC_NO, KC_HOME,                      KC_MINS,  KC_EQL, KC_LBRC, KC_RBRC, KC_BSLS,  KC_GRV,
+      KC_LSFT, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGUP, KC_HOME,                      KC_MINS,  KC_EQL, KC_LBRC, KC_RBRC, KC_BSLS,  KC_GRV,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, KC_EXLM,   KC_AT, KC_HASH,   KC_DLR,  KC_END,                      KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, KC_TILD,
+      KC_LCTL, KC_EXLM,   KC_AT, KC_HASH, KC_PGDN,  KC_END,                      KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, KC_TILD,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                       KC_LGUI, MO(_CONTROL), KC_SPC,     KC_ENT, KC_TRNS, KC_RALT
                                       //`--------------------------'  `--------------------------'
@@ -66,9 +66,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       QK_BOOT,  EE_CLR,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_MPRV, KC_MNXT,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI,   KC_NO,   KC_NO,                      KC_VOLU, KC_MPLY,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
+      RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU,   KC_NO,                      KC_VOLU, KC_MPLY,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD,   KC_NO,   KC_NO,                      KC_VOLD,  KC_MSTP,  KC_NO,   KC_NO,   KC_NO, TG(_GAMING),
+      RM_NEXT, RM_HUED, RM_SATD, RM_VALD, RM_SPDD,   KC_NO,                      KC_VOLD,  KC_MSTP,  KC_NO,   KC_NO,   KC_NO, TG(_GAMING),
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI, KC_TRNS,  KC_SPC,     KC_ENT, KC_TRNS, KC_RALT
                                       //`--------------------------'  `--------------------------'
@@ -120,6 +120,9 @@ static void oled_render_layer_state(void) {
             break;
         case 3:
             oled_write_ln_P(PSTR("Adjust"), false);
+            break;
+        case 4:
+            oled_write_ln_P(PSTR("Gaming"), false);
             break;
         default:
             oled_write_ln_P(PSTR("Undef"), false);
