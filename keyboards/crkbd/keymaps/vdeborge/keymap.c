@@ -88,6 +88,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+// OS-aware copy-paste functionality: LGUI+C always copies, LGUI+V always pastes
+// Also handles LGUI+SHIFT+C/V (translates to CTRL+SHIFT+C/V on Windows/Linux)
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // Handle C and V keys when LGUI is held
+    if ((keycode == KC_C || keycode == KC_V) && record->event.pressed && (get_mods() & MOD_MASK_GUI)) {
+        os_variant_t os = detected_host_os();
+        
+        // On Windows/Linux, translate LGUI+key to CTRL+key (preserving SHIFT if held)
+        if (os == OS_WINDOWS || os == OS_LINUX) {
+            uint8_t original_mods = get_mods();
+            clear_mods();
+            // Add CTRL and preserve SHIFT if it was held
+            add_mods(MOD_BIT(KC_LCTL));
+            if (original_mods & MOD_MASK_SHIFT) {
+                add_mods(MOD_BIT(KC_LSFT));
+            }
+            tap_code(keycode);
+            set_mods(original_mods);
+            return false;
+        }
+    }
+    return true; // Process all other keys normally
+}
+
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     if (!is_keyboard_master()) {
